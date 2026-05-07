@@ -25,6 +25,10 @@ if ($_SESSION['usuario_tipo'] != 'aluno') {
     />
 
     <style>
+
+      nav{
+        background-color: rgb(17, 58,120);
+      }
       /* Hover do menu */
       .nav-link:hover {
         background-color: white;
@@ -37,7 +41,7 @@ if ($_SESSION['usuario_tipo'] != 'aluno') {
   <body class="bg-light">
 
 <!-- NAVBAR -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow">
+<nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container">
         <a class="navbar-brand fw-bold">Gradly</a>
 
@@ -59,7 +63,6 @@ if ($_SESSION['usuario_tipo'] != 'aluno') {
         <div
           class="col-md-2 bg-primary text-white vh-100 p-3 d-flex flex-column"
         >
-          <h4 class="text-center mb-4">Aluno</h4>
 
           <!-- MENU SUPERIOR -->
           <ul class="nav flex-column">

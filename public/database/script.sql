@@ -73,10 +73,8 @@ CREATE TABLE aluno(
     matricula VARCHAR(50),
     curso VARCHAR(100),
     grupo_id INT,
-    projeto_id INT,
     FOREIGN KEY (id) REFERENCES `user`(id),
-    FOREIGN KEY (grupo_id) REFERENCES grupo(id),
-    FOREIGN KEY (projeto_id) REFERENCES projeto_tcc(id)
+    FOREIGN KEY (grupo_id) REFERENCES grupo(id)
 );
 
 -- ============ DOCUMENTO =============
