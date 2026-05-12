@@ -217,7 +217,7 @@ if ($_SESSION['usuario_tipo'] != 'aluno') {
     </div>
   </main>
 
-  <script src="../assets/service/projeto.js"></script>
+  <script src="../assets/service/criar_projeto.js"></script>
   <script src="../assets/service/logout.js"></script>
 </body>
 </html>
