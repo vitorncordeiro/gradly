@@ -234,13 +234,6 @@ if ($_SESSION['usuario_tipo'] != 'aluno') {
 
 <!-- MAIN -->
 <main class="main">
-
-  <div class="alert-bar fi fi-1" id="alertBar">
-    <svg viewBox="0 0 24 24" style="stroke:#f59e0b;fill:none;stroke-width:2;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-    Seu projeto não possui orientador designado. <a href="#">Acesse as Configurações</a> para vincular e receber aprovação.
-    <button class="alert-close" onclick="document.getElementById('alertBar').remove()">×</button>
-  </div>
-
   <div class="content">
     <div class="content-main">
 
@@ -344,10 +337,5 @@ if ($_SESSION['usuario_tipo'] != 'aluno') {
 
 <script src="../assets/service/dashboard_aluno.js"></script>
 <script src="../assets/service/logout.js"></script>
-<script>
-  const nm = (typeof SESSION_NOME !== 'undefined' ? SESSION_NOME : 'Aluno Teste');
-  const initials = nm.split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase() || 'AL';
-  document.querySelector('.avatar-btn').textContent = initials;
-</script>
 </body>
 </html>
