@@ -93,6 +93,6 @@
     </div>
 
 </div>
-<script src="../assets/service/orientador.js"></script>
+<script src="../assets/service/orientador/orientador.js"></script>
 </body>
 </html>

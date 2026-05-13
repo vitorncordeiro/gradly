@@ -83,6 +83,7 @@
         titulo VARCHAR(255),
         conteudo TEXT,
         dataCriacao DATETIME,
+        path VARCHAR(500),
         versao INT,
         projeto_id INT,
         FOREIGN KEY (projeto_id) REFERENCES projeto_tcc(id)

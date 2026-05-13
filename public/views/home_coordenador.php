@@ -117,7 +117,7 @@ if ($_SESSION['usuario_tipo'] != 'coordenador') {
     </div>
 </div>
 
-<script src="../assets/service/logout.js"></script>
+<script src="../assets/service/controle/logout.js"></script>
 
 </body>
 </html>
