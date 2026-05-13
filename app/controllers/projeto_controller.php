@@ -99,23 +99,9 @@ class ProjetoControle {
                 return;
             }
 
-            $query = "SELECT p.titulo,
-                             p.descricao,
-                             p.objetivo,
-                             p.temas,
-                             p.areas,
-                             p.estado,
-                             u.nome AS orientador_nome
-                      FROM projeto_tcc p
-                      LEFT JOIN orientador o ON o.id = p.orientador_id
-                      LEFT JOIN user u ON u.id = o.id
-                      WHERE p.grupo_id = :grupo_id
-                      LIMIT 1";
-
-            $projeto = Conexao::executarComParametros(
-                $query,
-                [':grupo_id' => $aluno['grupo_id']]
-            )->fetch(PDO::FETCH_ASSOC);
+            $projeto = new Projeto();
+            $projeto->grupo_id = $aluno['grupo_id'];
+            $projeto = $projeto->buscarPorGrupo();
 
             echo json_encode([
                 'success' => true,

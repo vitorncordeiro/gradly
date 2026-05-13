@@ -12,6 +12,7 @@ class Projeto {
     public $areas;
     public $orientador_id;
     public $grupo_id;
+    public $orientador_nome;
 
     public function inserir() {
 
@@ -40,5 +41,36 @@ class Projeto {
             throw new Exception("Erro ao inserir projeto: " . $e->getMessage());
         }
     }
+
+    public function buscarPorGrupo() {
+
+        try {
+
+            $parametros = Array(
+                ':grupo_id' => $this->grupo_id
+            );
+
+            $query = "SELECT p.titulo,
+                             p.descricao,
+                             p.objetivo,
+                             p.temas,
+                             p.areas,
+                             p.estado,
+                             u.nome AS orientador_nome
+                      FROM projeto_tcc p
+                      LEFT JOIN orientador o ON o.id = p.orientador_id
+                      LEFT JOIN user u ON u.id = o.id
+                      WHERE p.grupo_id = :grupo_id
+                      LIMIT 1";
+
+            $stmt = Conexao::executarComParametros($query, $parametros);
+
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+
+        } catch (Exception $e) {
+            throw new Exception("Erro ao buscar projeto: " . $e->getMessage());
+        }
+    }
+    
 }
 ?>
