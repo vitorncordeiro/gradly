@@ -132,6 +132,6 @@
       </div>
 </main>
 
-<script src="../assets/service/login.js"></script>
+<script src="../assets/service/controle/login.js"></script>
 </body>
 </html>

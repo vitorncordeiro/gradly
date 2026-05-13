@@ -335,7 +335,7 @@ if ($_SESSION['usuario_tipo'] != 'aluno') {
   </div>
 </main>
 
-<script src="../assets/service/dashboard_aluno.js"></script>
-<script src="../assets/service/logout.js"></script>
+<script src="../assets/service/aluno/dashboard_aluno.js"></script>
+<script src="../assets/service/controle/logout.js"></script>
 </body>
 </html>

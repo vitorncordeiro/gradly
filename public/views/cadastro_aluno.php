@@ -93,6 +93,6 @@
     </div>
 
 </div>
-<script src="../assets/service/aluno.js"></script>
+<script src="../assets/service/aluno/aluno.js"></script>
 </body>
 </html>
