@@ -88,6 +88,35 @@ if ($_SESSION['usuario_tipo'] != 'aluno') {
     .info-label{font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--text-2);margin-bottom:6px;}
     .info-value{font-size:13.5px;color:var(--text-1);}
 
+    .proj-docs{padding:1rem 1.25rem;border-top:1px solid var(--border);}
+    .proj-docs-title{font-size:13px;font-weight:600;color:var(--text-1);margin-bottom:.6rem;}
+    .proj-docs-empty{font-size:12.5px;color:var(--text-3);}
+    .proj-doc{padding:.6rem .75rem;border:1px solid var(--border);border-radius:var(--r-lg);background:var(--surface2);margin-bottom:.6rem;}
+    .proj-doc:last-child{margin-bottom:0;}
+    .proj-doc-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:.4rem;}
+    .proj-doc-title{font-size:12.8px;font-weight:600;color:var(--text-1);}
+    .proj-doc-count{font-size:11.5px;color:var(--text-2);}
+    .proj-doc-list{display:flex;flex-direction:column;gap:.25rem;}
+    .proj-doc-item{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;font-size:12px;color:var(--text-2);}
+    .proj-doc-actions{display:flex;gap:6px;}
+    .doc-btn{width:26px;height:26px;border:1px solid var(--border-mid);border-radius:var(--r-md);background:white;display:inline-flex;align-items:center;justify-content:center;color:var(--text-2);cursor:pointer;transition:all .12s;}
+    .doc-btn:hover{border-color:var(--green);color:var(--green);}
+    .doc-btn svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.75;}
+
+    .proj-doc-comments{width:100%;padding-top:.4rem;border-top:1px dashed var(--border);margin-top:.35rem;display:flex;flex-direction:column;gap:.35rem;}
+    .proj-comment{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);padding:.45rem .6rem;}
+    .proj-comment-meta{font-size:11px;color:var(--text-3);display:block;margin-bottom:.2rem;}
+    .proj-comment-text{font-size:12.5px;color:var(--text-1);margin:0;}
+    .proj-comment-empty{font-size:11.5px;color:var(--text-3);}
+
+    .pdf-modal{position:fixed;inset:0;background:rgba(15,23,42,.55);display:none;align-items:center;justify-content:center;z-index:300;}
+    .pdf-modal.active{display:flex;}
+    .pdf-modal-card{width:min(900px,92vw);height:min(80vh,720px);background:var(--surface);border-radius:var(--r-xl);border:1px solid var(--border);overflow:hidden;display:flex;flex-direction:column;}
+    .pdf-modal-head{display:flex;align-items:center;justify-content:space-between;padding:.6rem 1rem;border-bottom:1px solid var(--border);}
+    .pdf-modal-title{font-size:13px;font-weight:600;color:var(--text-1);}
+    .pdf-modal-body{flex:1;}
+    .pdf-modal-body iframe{width:100%;height:100%;border:none;}
+
     .empty-state{border:1px dashed var(--border-mid);border-radius:var(--r-xl);padding:1.5rem;text-align:center;color:var(--text-2);background:var(--surface);}
 
     /* BUTTONS */

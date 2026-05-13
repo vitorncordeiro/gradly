@@ -293,8 +293,8 @@ if ($_SESSION['usuario_tipo'] != 'aluno') {
 
         <div class="proj-meta">
           <div>
-            <p class="proj-name">Título do Projeto</p>
-            <p class="proj-desc">O objetivo do projeto será exibido aqui após cadastro.</p>
+            <p class="proj-name" id="dashboardProjectTitle">Título do Projeto</p>
+            <p class="proj-desc" id="dashboardProjectObjective">O objetivo do projeto será exibido aqui após cadastro.</p>
           </div>
           <div class="score-wrap">
             <p class="score-lbl">Pontuação acumulada</p>
@@ -303,7 +303,7 @@ if ($_SESSION['usuario_tipo'] != 'aluno') {
         </div>
 
         <div class="proj-toolbar">
-          <button class="btn-outline" style="font-size:12px;padding:4px 12px;">Conectar orientador</button>
+          <a class="btn-outline" id="dashboardProjectLink" href="projeto.php" style="font-size:12px;padding:4px 12px;">Ver projeto</a>
           <button class="btn-ghost-sm">Editar configurações</button>
           <button class="btn-tag">+ Adicionar tag</button>
         </div>
@@ -335,6 +335,7 @@ if ($_SESSION['usuario_tipo'] != 'aluno') {
   </div>
 </main>
 
+<script src="../assets/service/projeto/buscar_projeto.js"></script>
 <script src="../assets/service/aluno/dashboard_aluno.js"></script>
 <script src="../assets/service/controle/logout.js"></script>
 </body>

@@ -13,6 +13,7 @@ class Projeto {
     public $orientador_id;
     public $grupo_id;
     public $orientador_nome;
+    public $documentos;
 
     public function inserir() {
 
@@ -50,7 +51,8 @@ class Projeto {
                 ':grupo_id' => $this->grupo_id
             );
 
-            $query = "SELECT p.titulo,
+                 $query = "SELECT p.id,
+                         p.titulo,
                              p.descricao,
                              p.objetivo,
                              p.temas,
@@ -65,7 +67,74 @@ class Projeto {
 
             $stmt = Conexao::executarComParametros($query, $parametros);
 
-            return $stmt->fetch(PDO::FETCH_ASSOC);
+            $projeto = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if (!$projeto) {
+                return null;
+            }
+
+            $docsStmt = Conexao::executarComParametros(
+                "SELECT id, titulo, versao, dataCriacao, path
+                 FROM documento
+                 WHERE projeto_id = :projeto_id
+                 ORDER BY titulo, versao DESC, id DESC",
+                [':projeto_id' => $projeto['id']]
+            );
+
+            $docs = [];
+            $docIds = [];
+            while ($doc = $docsStmt->fetch(PDO::FETCH_ASSOC)) {
+                $docs[] = $doc;
+                $docIds[] = $doc['id'];
+            }
+
+            $comentariosPorDocumento = [];
+            if (!empty($docIds)) {
+                $placeholders = [];
+                $params = [];
+
+                foreach ($docIds as $index => $docId) {
+                    $placeholder = ':doc' . $index;
+                    $placeholders[] = $placeholder;
+                    $params[$placeholder] = $docId;
+                }
+
+                $comentariosStmt = Conexao::executarComParametros(
+                    "SELECT c.id, c.texto, c.data_criacao, c.documento_id, u.nome AS autor_nome
+                     FROM comentario c
+                     LEFT JOIN user u ON u.id = c.autor_id
+                     WHERE c.documento_id IN (" . implode(',', $placeholders) . ")
+                     ORDER BY c.data_criacao DESC, c.id DESC",
+                    $params
+                );
+
+                while ($comentario = $comentariosStmt->fetch(PDO::FETCH_ASSOC)) {
+                    $docId = $comentario['documento_id'];
+                    if (!isset($comentariosPorDocumento[$docId])) {
+                        $comentariosPorDocumento[$docId] = [];
+                    }
+                    $comentariosPorDocumento[$docId][] = $comentario;
+                }
+            }
+
+            $documentos = [];
+            foreach ($docs as $doc) {
+                $titulo = $doc['titulo'] ?? 'Sem título';
+
+                if (!isset($documentos[$titulo])) {
+                    $documentos[$titulo] = [
+                        'titulo' => $titulo,
+                        'versoes' => []
+                    ];
+                }
+
+                $doc['comentarios'] = $comentariosPorDocumento[$doc['id']] ?? [];
+                $documentos[$titulo]['versoes'][] = $doc;
+            }
+
+            $projeto['documentos'] = array_values($documentos);
+
+            return $projeto;
 
         } catch (Exception $e) {
             throw new Exception("Erro ao buscar projeto: " . $e->getMessage());
