@@ -6,6 +6,7 @@ services:
     container_name: gradly_mysql
     environment:
       MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: gradly
       MYSQL_USER: gradly_user
       MYSQL_PASSWORD: gradly_pass
     ports:
@@ -16,12 +17,14 @@ services:
     networks:
       - gradly_network
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -p$$MYSQL_ROOT_PASSWORD"]
       timeout: 20s
       retries: 10
 
   web:
-    image: php:8.1-apache
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: gradly_web
     ports:
       - "80:80"
@@ -37,11 +40,21 @@ services:
         condition: service_healthy
     networks:
       - gradly_network
-    command: >
-      bash -c "
-      a2enmod rewrite &&
-      apache2-foreground
-      "
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: gradly_phpmyadmin
+    ports:
+      - "8080:80"
+    environment:
+      PMA_HOST: mysql
+      PMA_USER: gradly_user
+      PMA_PASSWORD: gradly_pass
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - gradly_network
 
 volumes:
   mysql_data:

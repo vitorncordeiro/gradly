@@ -12,22 +12,37 @@
                 // Detecta se está em produção (Hostinger) ou local
                 $is_production = isset($_SERVER['HTTP_HOST']) && $_SERVER['HTTP_HOST'] !== 'localhost' && $_SERVER['HTTP_HOST'] !== '127.0.0.1';
 
+                // Prioriza variáveis de ambiente (Docker, CI, etc.)
+                $env_host = getenv('DB_HOST');
+                $env_dbname = getenv('DB_NAME');
+                $env_user = getenv('DB_USER');
+                $env_pass = getenv('DB_PASSWORD');
+                $env_port = getenv('DB_PORT');
+
                 try {
-                    if ($is_production) {
+                    if ($env_host || $env_dbname || $env_user || $env_pass || $env_port) {
+                        $host = $env_host ?: "localhost";
+                        $dbname = $env_dbname ?: "gradly";
+                        $usuario = $env_user ?: "root";
+                        $senha = $env_pass ?: "";
+                        $port = $env_port ?: "3306";
+                    } elseif ($is_production) {
                         // DADOS DA HOSTINGER (Substitua pelos seus reais)
                         $host    = "localhost"; 
                         $dbname  = "u123456789_purple"; 
                         $usuario = "u123456789_user";
                         $senha   = "SuaSenhaSeguraAqui";
+                        $port    = "3306";
                     } else {
                         // DADOS LOCAL (XAMPP / WAMP)
                         $host    = "localhost";
                         $dbname  = "gradly";
                         $usuario = "root";
                         $senha   = "";
+                        $port    = "3306";
                     }
 
-                    $dsn = "mysql:host=$host;dbname=$dbname;port=3306;charset=utf8mb4";
+                    $dsn = "mysql:host=$host;dbname=$dbname;port=$port;charset=utf8mb4";
 
                     // Configurações de segurança e performance
                     $opcoes = [
