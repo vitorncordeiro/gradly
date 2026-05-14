@@ -72,21 +72,47 @@ class ProjetoControle {
         }
     }
 
+    //se não for aluno, for orientador, tem que pegar o próprio ID do orientador logado, e buscar todos os projetos que possuem esse id
+
     public function buscar() {
         try {
-            $aluno_id = $_SESSION['usuario_id'] ?? null;
-            if (!$aluno_id) {
+            $usuario_id = $_SESSION['usuario_id'] ?? null;
+            $usuario_tipo = $_SESSION['usuario_tipo'] ?? null;
+
+            if (!$usuario_id) {
                 http_response_code(401);
                 echo json_encode([
                     'success' => false,
-                    'message' => 'Aluno não autenticado'
+                    'message' => 'Usuário não autenticado'
+                ]);
+                return;
+            }
+
+            if ($usuario_tipo === 'orientador') {
+                $projeto = new Projeto();
+                $projeto->orientador_id = $usuario_id;
+                $projetos = $projeto->buscarPorOrientador();
+
+                echo json_encode([
+                    'success' => true,
+                    'message' => empty($projetos) ? 'Orientador sem projetos associados' : null,
+                    'data' => $projetos
+                ]);
+                return;
+            }
+
+            if ($usuario_tipo !== 'aluno') {
+                http_response_code(403);
+                echo json_encode([
+                    'success' => false,
+                    'message' => 'Tipo de usuário não autorizado'
                 ]);
                 return;
             }
 
             $stmt = Conexao::executarComParametros(
                 "SELECT grupo_id FROM aluno WHERE id = :id",
-                [':id' => $aluno_id]
+                [':id' => $usuario_id]
             );
             $aluno = $stmt->fetch(PDO::FETCH_ASSOC);
 
