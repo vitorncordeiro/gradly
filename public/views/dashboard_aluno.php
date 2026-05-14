@@ -100,17 +100,56 @@ if ($_SESSION['usuario_tipo'] != 'aluno') {
     .sbadge{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:99px;font-size:12px;font-weight:500;}
     .sbadge.pending{background:#fffbeb;color:#92400e;border:1px solid #fde68a;}
     .sbadge.pending::before{content:'';width:6px;height:6px;border-radius:50%;background:#f59e0b;flex-shrink:0;}
+    .sbadge.approved{background:var(--green-light);color:var(--green-text);border:1px solid var(--green-mid);}
+    .sbadge.approved::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--green);flex-shrink:0;}
+    .sbadge.error{background:#fef2f2;color:#991b1b;border:1px solid #fecaca;}
+    .sbadge.error::before{content:'';width:6px;height:6px;border-radius:50%;background:#ef4444;flex-shrink:0;}
 
     /* PROJECT CARD */
-    .proj-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-xl);margin-bottom:1.25rem;overflow:hidden;}
+    .proj-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-xl);overflow:hidden;}
     .proj-header{padding:.9rem 1.25rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);gap:10px;}
-    .proj-title-row{display:flex;align-items:center;gap:0;}
-    .proj-card-title{font-size:15px;font-weight:600;color:var(--text-1);margin-right:1rem;}
-    .tabs-inline{display:flex;gap:0;}
-    .tab{padding:.55rem .9rem;font-size:13px;font-weight:500;color:var(--text-2);border-bottom:2px solid transparent;cursor:pointer;text-decoration:none;transition:color .12s;}
-    .tab:hover{color:var(--text-1);}
-    .tab.active{color:var(--green);border-bottom-color:var(--green);}
-    .proj-actions{display:flex;gap:6px;align-items:center;flex-shrink:0;}
+    .proj-card-title{font-size:15px;font-weight:600;color:var(--text-1);margin:0;}
+    .proj-meta{padding:.9rem 1.25rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);gap:10px;}
+    .proj-name{font-size:14px;font-weight:600;color:var(--text-1);margin-bottom:4px;}
+    .proj-desc{font-size:12.5px;color:var(--text-3);}
+
+    .info-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0;}
+    .info-item{padding:.85rem 1.25rem;border-bottom:1px solid var(--border);border-right:1px solid var(--border);}
+    .info-item:nth-child(even){border-right:none;}
+    .info-item:nth-last-child(-n+2){border-bottom:none;}
+    .info-label{font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--text-2);margin-bottom:6px;}
+    .info-value{font-size:13.5px;color:var(--text-1);}
+
+    .proj-docs{padding:1rem 1.25rem;border-top:1px solid var(--border);}
+    .proj-docs-title{font-size:13px;font-weight:600;color:var(--text-1);margin-bottom:.6rem;}
+    .proj-docs-empty{font-size:12.5px;color:var(--text-3);}
+    .proj-doc{padding:.6rem .75rem;border:1px solid var(--border);border-radius:var(--r-lg);background:var(--surface2);margin-bottom:.6rem;}
+    .proj-doc:last-child{margin-bottom:0;}
+    .proj-doc-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:.4rem;}
+    .proj-doc-title{font-size:12.8px;font-weight:600;color:var(--text-1);}
+    .proj-doc-count{font-size:11.5px;color:var(--text-2);}
+    .proj-doc-list{display:flex;flex-direction:column;gap:.25rem;}
+    .proj-doc-item{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;font-size:12px;color:var(--text-2);}
+    .proj-doc-actions{display:flex;gap:6px;}
+    .doc-btn{width:26px;height:26px;border:1px solid var(--border-mid);border-radius:var(--r-md);background:white;display:inline-flex;align-items:center;justify-content:center;color:var(--text-2);cursor:pointer;transition:all .12s;}
+    .doc-btn:hover{border-color:var(--green);color:var(--green);}
+    .doc-btn svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.75;}
+
+    .proj-doc-comments{width:100%;padding-top:.4rem;border-top:1px dashed var(--border);margin-top:.35rem;display:flex;flex-direction:column;gap:.35rem;}
+    .proj-comment{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);padding:.45rem .6rem;}
+    .proj-comment-meta{font-size:11px;color:var(--text-3);display:block;margin-bottom:.2rem;}
+    .proj-comment-text{font-size:12.5px;color:var(--text-1);margin:0;}
+    .proj-comment-empty{font-size:11.5px;color:var(--text-3);}
+
+    .pdf-modal{position:fixed;inset:0;background:rgba(15,23,42,.55);display:none;align-items:center;justify-content:center;z-index:300;}
+    .pdf-modal.active{display:flex;}
+    .pdf-modal-card{width:min(900px,92vw);height:min(80vh,720px);background:var(--surface);border-radius:var(--r-xl);border:1px solid var(--border);overflow:hidden;display:flex;flex-direction:column;}
+    .pdf-modal-head{display:flex;align-items:center;justify-content:space-between;padding:.6rem 1rem;border-bottom:1px solid var(--border);}
+    .pdf-modal-title{font-size:13px;font-weight:600;color:var(--text-1);}
+    .pdf-modal-body{flex:1;}
+    .pdf-modal-body iframe{width:100%;height:100%;border:none;}
+
+    .empty-state{border:1px dashed var(--border-mid);border-radius:var(--r-xl);padding:1.5rem;text-align:center;color:var(--text-2);background:var(--surface);}
 
     /* BUTTONS */
     .btn-primary{background:var(--green);color:white;border:1px solid var(--green);padding:6px 14px;border-radius:var(--r-md);font-size:13px;font-weight:500;font-family:inherit;cursor:pointer;transition:background .12s;display:inline-flex;align-items:center;gap:5px;white-space:nowrap;}
@@ -123,26 +162,6 @@ if ($_SESSION['usuario_tipo'] != 'aluno') {
     .btn-dots:hover{background:var(--surface2);color:var(--text-1);}
     .btn-tag{background:white;border:1px dashed var(--border-mid);color:var(--text-2);padding:3px 10px;border-radius:var(--r-md);font-size:12px;font-family:inherit;cursor:pointer;transition:all .12s;}
     .btn-tag:hover{border-color:var(--green);color:var(--green);border-style:solid;}
-
-    /* PROJECT INNER */
-    .proj-meta{padding:.9rem 1.25rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);}
-    .proj-name{font-size:13.5px;font-weight:600;color:var(--text-1);margin-bottom:3px;}
-    .proj-desc{font-size:12.5px;color:var(--text-3);}
-    .score-wrap{text-align:right;}
-    .score-lbl{font-size:11px;color:var(--text-3);}
-    .score-val{font-size:14px;font-weight:600;color:var(--text-1);}
-    .proj-toolbar{padding:.65rem 1.25rem;display:flex;gap:8px;align-items:center;border-bottom:1px solid var(--border);}
-
-    /* FEATURE GRID */
-    .feat-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;}
-    .feat-item{display:flex;align-items:center;gap:12px;padding:.9rem 1.25rem;border-bottom:1px solid var(--border);border-right:1px solid var(--border);text-decoration:none;color:inherit;transition:background .12s;cursor:pointer;}
-    .feat-item:nth-child(even){border-right:none;}
-    .feat-item:nth-last-child(-n+2){border-bottom:none;}
-    .feat-item:hover{background:var(--bg);}
-    .feat-ico{width:34px;height:34px;border-radius:var(--r-lg);background:var(--green-light);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-    .feat-ico svg{width:17px;height:17px;stroke:var(--green);fill:none;stroke-width:1.75;}
-    .feat-name{font-size:13.5px;font-weight:500;color:var(--text-1);flex:1;}
-    .feat-arr{width:14px;height:14px;stroke:var(--text-3);fill:none;stroke-width:2;}
 
     /* RIGHT PANEL */
     .right-panel{width:252px;flex-shrink:0;border-left:1px solid var(--border);background:var(--surface);padding:1.25rem;display:flex;flex-direction:column;gap:.75rem;}
@@ -270,67 +289,8 @@ if ($_SESSION['usuario_tipo'] != 'aluno') {
         </div>
       </div>
 
-      <!-- PROJECT CARD -->
-      <div class="proj-card fi fi-4">
-        <div class="proj-header">
-          <div class="proj-title-row">
-            <span class="proj-card-title">Projeto Atual</span>
-            <div class="tabs-inline">
-              <a href="#" class="tab active">Resumo</a>
-              <a href="#" class="tab">Grupo</a>
-              <a href="#" class="tab">Histórico</a>
-            </div>
-          </div>
-          <div class="proj-actions">
-            <button class="btn-outline" id="criar_grupo">Criar grupo</button>
-            <button class="btn-primary" id="criar_projeto">
-              <svg viewBox="0 0 24 24" style="width:12px;height:12px;stroke:white;fill:none;stroke-width:2.5;"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-              Novo projeto
-            </button>
-            <button class="btn-dots">···</button>
-          </div>
-        </div>
-
-        <div class="proj-meta">
-          <div>
-            <p class="proj-name" id="dashboardProjectTitle">Título do Projeto</p>
-            <p class="proj-desc" id="dashboardProjectObjective">O objetivo do projeto será exibido aqui após cadastro.</p>
-          </div>
-          <div class="score-wrap">
-            <p class="score-lbl">Pontuação acumulada</p>
-            <p class="score-val">—</p>
-          </div>
-        </div>
-
-        <div class="proj-toolbar">
-          <a class="btn-outline" id="dashboardProjectLink" href="projeto.php" style="font-size:12px;padding:4px 12px;">Ver projeto</a>
-          <button class="btn-ghost-sm">Editar configurações</button>
-          <button class="btn-tag">+ Adicionar tag</button>
-        </div>
-
-        <div class="feat-grid">
-          <div class="feat-item">
-            <div class="feat-ico"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
-            <span class="feat-name">Ver tarefas</span>
-            <svg class="feat-arr" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-          </div>
-          <div class="feat-item">
-            <div class="feat-ico"><svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></div>
-            <span class="feat-name">Monitorar progresso</span>
-            <svg class="feat-arr" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-          </div>
-          <div class="feat-item">
-            <div class="feat-ico"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
-            <span class="feat-name">Pesquisa de IA</span>
-            <svg class="feat-arr" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-          </div>
-          <div class="feat-item">
-            <div class="feat-ico"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
-            <span class="feat-name">Ver pontuação</span>
-            <svg class="feat-arr" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-          </div>
-        </div>
-      </div>
+      <!-- PROJECT CARD (renderizado via JS) -->
+      <div id="projectContainer" class="fi fi-4"></div>
     </div>
   </div>
 </main>

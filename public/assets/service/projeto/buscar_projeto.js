@@ -2,11 +2,10 @@ document.addEventListener("DOMContentLoaded", () => {
   buscarProjeto();
 });
 
+// BUSCA PROJETO NO BACKEND
+
 async function buscarProjeto() {
   const container = document.getElementById("projectContainer");
-  const dashboardTitle = document.getElementById("dashboardProjectTitle");
-  const dashboardObjective = document.getElementById("dashboardProjectObjective");
-  const dashboardLink = document.getElementById("dashboardProjectLink");
 
   if (container) {
     container.innerHTML = "";
@@ -24,59 +23,21 @@ async function buscarProjeto() {
       if (container) {
         renderEmptyState(container, resposta.message);
       }
-      if (dashboardTitle || dashboardObjective) {
-        renderDashboardEmptyState(resposta.message);
-      }
       return;
     }
 
     if (container) {
       renderProjeto(container, resposta.data);
     }
-    if (dashboardTitle || dashboardObjective || dashboardLink) {
-      renderDashboardProjeto(resposta.data);
-    }
   } catch (error) {
     if (container) {
       renderEmptyState(container, "Não foi possível carregar o projeto.");
     }
-    if (dashboardTitle || dashboardObjective) {
-      renderDashboardEmptyState("Não foi possível carregar o projeto.");
-    }
   }
 }
 
-function renderDashboardProjeto(projeto) {
-  const titleEl = document.getElementById("dashboardProjectTitle");
-  const objectiveEl = document.getElementById("dashboardProjectObjective");
-  const linkEl = document.getElementById("dashboardProjectLink");
 
-  if (titleEl) {
-    titleEl.textContent = projeto.titulo || "Projeto sem título";
-  }
-
-  if (objectiveEl) {
-    objectiveEl.textContent = projeto.objetivo || "Objetivo nao informado";
-  }
-
-  if (linkEl) {
-    linkEl.href = "projeto.php";
-  }
-}
-
-function renderDashboardEmptyState(message) {
-  const titleEl = document.getElementById("dashboardProjectTitle");
-  const objectiveEl = document.getElementById("dashboardProjectObjective");
-
-  if (titleEl) {
-    titleEl.textContent = "Nenhum projeto encontrado";
-  }
-
-  if (objectiveEl) {
-    objectiveEl.textContent =
-      message || "Cadastre um projeto para visualizar o objetivo.";
-  }
-}
+//RENDERIZA COMPONENTE DO PROJETO
 
 function renderProjeto(container, projeto) {
   const card = document.createElement("div");
@@ -159,6 +120,8 @@ function renderProjeto(container, projeto) {
   card.appendChild(renderDocumentos(projeto.documentos));
   container.appendChild(card);
 }
+
+//RENDERIZA DOCUMENTOS DO PROJETO COM OS COMENTARIOS
 
 function renderDocumentos(documentos) {
   const wrapper = document.createElement("div");
@@ -264,6 +227,37 @@ function renderDocumentos(documentos) {
   return wrapper;
 }
 
+//RENDERIZA ESTADO VAZIO QUANDO NAO EXISTE PROJETO CADASTRADO
+
+
+function renderEmptyState(container, message) {
+  const empty = document.createElement("div");
+  empty.className = "empty-state";
+
+  const title = document.createElement("p");
+  title.style.fontWeight = "600";
+  title.style.marginBottom = "6px";
+  title.textContent = "Nenhum projeto encontrado";
+
+  const subtitle = document.createElement("p");
+  subtitle.style.marginBottom = "12px";
+  subtitle.textContent = message || "Cadastre um projeto para visualizar os detalhes.";
+
+  const link = document.createElement("a");
+  link.className = "btn-primary";
+  link.href = "cadastro_projeto.php";
+  link.textContent = "Criar projeto";
+
+  empty.appendChild(title);
+  empty.appendChild(subtitle);
+  empty.appendChild(link);
+  container.appendChild(empty);
+}
+
+
+//FUNÇÕES AUXILIARES PARA VISUALIZAÇÃO DO PDF(ABRIR, FECHAR, GARANTIR MODAL)
+
+
 function openPdfViewer(path, title) {
   const modal = ensurePdfModal();
   const iframe = modal.querySelector("iframe");
@@ -332,29 +326,7 @@ function resolveDocPath(path) {
   return `/gradly/${path}`;
 }
 
-function renderEmptyState(container, message) {
-  const empty = document.createElement("div");
-  empty.className = "empty-state";
 
-  const title = document.createElement("p");
-  title.style.fontWeight = "600";
-  title.style.marginBottom = "6px";
-  title.textContent = "Nenhum projeto encontrado";
-
-  const subtitle = document.createElement("p");
-  subtitle.style.marginBottom = "12px";
-  subtitle.textContent = message || "Cadastre um projeto para visualizar os detalhes.";
-
-  const link = document.createElement("a");
-  link.className = "btn-primary";
-  link.href = "cadastro_projeto.php";
-  link.textContent = "Criar projeto";
-
-  empty.appendChild(title);
-  empty.appendChild(subtitle);
-  empty.appendChild(link);
-  container.appendChild(empty);
-}
 
 function getStatusClass(status) {
   if (!status) {
