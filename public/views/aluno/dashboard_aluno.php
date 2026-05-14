@@ -106,7 +106,7 @@ if ($_SESSION['usuario_tipo'] != 'aluno') {
     .sbadge.error::before{content:'';width:6px;height:6px;border-radius:50%;background:#ef4444;flex-shrink:0;}
 
     /* PROJECT CARD */
-    .proj-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-xl);overflow:hidden;}
+    .proj-card{background:var(--surface);border:1px solid #c1ccda;border-radius:var(--r-xl);overflow:hidden;}
     .proj-header{padding:.9rem 1.25rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);gap:10px;}
     .proj-card-title{font-size:15px;font-weight:600;color:var(--text-1);margin:0;}
     .proj-meta{padding:.9rem 1.25rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);gap:10px;}
