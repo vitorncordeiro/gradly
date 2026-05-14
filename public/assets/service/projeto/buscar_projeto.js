@@ -43,20 +43,6 @@ function renderProjeto(container, projeto) {
   const card = document.createElement("div");
   card.className = "proj-card";
 
-  const header = document.createElement("div");
-  header.className = "proj-header";
-
-  const title = document.createElement("h3");
-  title.className = "proj-card-title";
-  title.textContent = "Resumo do Projeto";
-
-  const status = document.createElement("span");
-  status.className = `sbadge ${getStatusClass(projeto.estado)}`;
-  status.textContent = projeto.estado || "Sem status";
-
-  header.appendChild(title);
-  header.appendChild(status);
-
   const meta = document.createElement("div");
   meta.className = "proj-meta";
 
@@ -114,7 +100,6 @@ function renderProjeto(container, projeto) {
     grid.appendChild(cell);
   });
 
-  card.appendChild(header);
   card.appendChild(meta);
   card.appendChild(grid);
   card.appendChild(renderDocumentos(projeto.documentos));
@@ -248,9 +233,15 @@ function renderEmptyState(container, message) {
   link.href = "cadastro_projeto.php";
   link.textContent = "Criar projeto";
 
+  const group = document.createElement("a");
+  group.className = "btn-primary";
+  group.href = "../cadastro_grupo.php";
+  group.textContent = "Criar grupo";
+
   empty.appendChild(title);
   empty.appendChild(subtitle);
   empty.appendChild(link);
+  empty.appendChild(group);
   container.appendChild(empty);
 }
 
