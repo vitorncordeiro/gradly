@@ -100,6 +100,6 @@
     </div>
 
 </div>
-<script src="../assets/service/coordenador/coordenador.js"></script>
+<script src="../../assets/service/coordenador/cadastrar_coordenador.js"></script>
 </body>
 </html>

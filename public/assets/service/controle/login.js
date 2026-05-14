@@ -30,13 +30,13 @@ async function logar(){
         // Redirecionar baseado no tipo de usuário
         switch(resposta.usuario_tipo){
             case 'orientador':
-                window.location.href = "home_orientador.php";
+                window.location.href = "dashboard_orientador.php";
                 break;
             case 'administrador':
                 window.location.href = "home_admin.php";
                 break;
             case 'coordenador':
-                window.location.href = "home_coordenador.php";
+                window.location.href = "coordenador/dashboard_coordenador.php";
                 break;
             case 'aluno':
                 window.location.href = "dashboard_aluno.php";

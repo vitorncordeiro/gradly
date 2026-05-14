@@ -31,5 +31,32 @@ class Orientador {
             throw new Exception("Erro ao inserir orientador: " . $e->getMessage());
         }
     }
+
+    public static function contar() {
+        $query = "SELECT COUNT(*) AS total FROM orientador";
+
+        $stmt = Conexao::executar($query);
+
+        $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return (int) $resultado['total'];
+    }
+
+    public static function buscarOrientador() {
+        $query = "
+            SELECT 
+                orientador.id,
+                user.nome
+            FROM orientador
+            INNER JOIN user 
+                ON orientador.id = user.id
+        ";
+
+        $stmt = Conexao::executar($query);
+
+        $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        return $resultado;
+    }
 }
 ?>

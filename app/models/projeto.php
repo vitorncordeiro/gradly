@@ -71,6 +71,26 @@ class Projeto {
             throw new Exception("Erro ao buscar projeto: " . $e->getMessage());
         }
     }
+
+    public static function contar() {
+        $query = "SELECT COUNT(*) AS total FROM projeto_tcc";
+
+        $stmt = Conexao::executar($query);
+
+        $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return (int) $resultado['total'];
+    }
+
+    public static function buscarSemOrientador() {
+        $query = "SELECT id, titulo FROM projeto_tcc WHERE orientador_id IS NULL";
+
+        $stmt = Conexao::executar($query);
+
+        $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        return $resultado;
+    }
     
 }
 ?>

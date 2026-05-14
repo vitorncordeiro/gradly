@@ -31,5 +31,15 @@ class Aluno {
             throw new Exception("Erro ao inserir aluno: " . $e->getMessage());
         }
     }
+
+    public static function contar() {
+        $query = "SELECT COUNT(*) AS total FROM aluno";
+
+        $stmt = Conexao::executar($query);
+
+        $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return (int) $resultado['total'];
+    }
 }
 ?>
