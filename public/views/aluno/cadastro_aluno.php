@@ -79,7 +79,7 @@
 
                     </form>
                         <div class="d-grid mt-4">
-                            <a href="login.php" class="btn btn-secondary btn-lg">
+                            <a href="../login.php" class="btn btn-secondary btn-lg">
                             Voltar
                             </a>
                         </div>
@@ -93,6 +93,6 @@
     </div>
 
 </div>
-<script src="../assets/service/aluno/aluno.js"></script>
+<script src="../../assets/service/aluno/aluno.js"></script>
 </body>
 </html>

@@ -60,7 +60,7 @@
 <script>
     function redirecionar(tipo) {
         if (tipo === 'aluno') {
-            window.location.href = 'cadastro_aluno.php';
+            window.location.href = 'aluno/cadastro_aluno.php';
         } 
         else if (tipo === 'orientador') {
             window.location.href = 'cadastro_orientador.php';
