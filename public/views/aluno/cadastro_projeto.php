@@ -2,7 +2,7 @@
 session_start();
 
 if (!isset($_SESSION['usuario_id'])) {
-    header("Location: login.php");
+    header("Location: ../login.php");
     exit;
 }
 
@@ -217,7 +217,7 @@ if ($_SESSION['usuario_tipo'] != 'aluno') {
     </div>
   </main>
 
-  <script src="../assets/service/projeto/criar_projeto.js"></script>
-  <script src="../assets/service/controle/logout.js"></script>
+  <script src="../../assets/service/projeto/criar_projeto.js"></script>
+  <script src="../../assets/service/controle/logout.js"></script>
 </body>
 </html>

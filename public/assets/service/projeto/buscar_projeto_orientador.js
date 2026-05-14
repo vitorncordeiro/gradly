@@ -1,10 +1,10 @@
 document.addEventListener("DOMContentLoaded", () => {
-  buscarProjeto();
+  buscarProjetos();
 });
 
-// BUSCA PROJETO NO BACKEND
+// BUSCA PROJETOS NO BACKEND
 
-async function buscarProjeto() {
+async function buscarProjetos() {
   const container = document.getElementById("projectContainer");
 
   if (container) {
@@ -26,8 +26,17 @@ async function buscarProjeto() {
       return;
     }
 
+    const projetos = Array.isArray(resposta.data) ? resposta.data : [resposta.data];
+
+    if (container && projetos.length === 0) {
+      renderEmptyState(container, resposta.message);
+      return;
+    }
+
     if (container) {
-      renderProjeto(container, resposta.data);
+      projetos.forEach((projeto) => {
+        renderProjeto(container, projeto);
+      });
     }
   } catch (error) {
     if (container) {
@@ -233,15 +242,9 @@ function renderEmptyState(container, message) {
   link.href = "cadastro_projeto.php";
   link.textContent = "Criar projeto";
 
-  const group = document.createElement("a");
-  group.className = "btn-primary";
-  group.href = "../cadastro_grupo.php";
-  group.textContent = "Criar grupo";
-
   empty.appendChild(title);
   empty.appendChild(subtitle);
   empty.appendChild(link);
-  empty.appendChild(group);
   container.appendChild(empty);
 }
 

@@ -50,7 +50,7 @@ async function cadastrar(){
     const resposta = await retorno.json();
         if(resposta.success){
             alert("Sucesso! " + resposta.message);
-            window.location.href = "dashboard_aluno.php";
+            window.location.href = "aluno/dashboard_aluno.php";
         }else{
             alert("Erro! " + resposta.message);
         }

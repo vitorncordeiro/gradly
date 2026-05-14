@@ -21,7 +21,7 @@ async function buscarAlunos(){
                 <tr>
                     <td>${aluno.nome}</td>
                     <td>${aluno.email}</td>
-                    <td>${aluno.curso}</td>
+                    <td>${aluno.titulo_projeto}</td>
                 </tr>
             `;
         });

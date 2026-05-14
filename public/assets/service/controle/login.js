@@ -19,9 +19,7 @@ async function logar(){
 
     const resposta = await retorno.json();
     
-    if(resposta.success){
-        alert("Bem-vindo! " + resposta.message);
-        
+    if(resposta.success){        
         // Armazenar dados do usuário na sessão/localStorage
         localStorage.setItem('usuario_id', resposta.usuario_id);
         localStorage.setItem('usuario_tipo', resposta.usuario_tipo);
@@ -39,7 +37,7 @@ async function logar(){
                 window.location.href = "coordenador/dashboard_coordenador.php";
                 break;
             case 'aluno':
-                window.location.href = "dashboard_aluno.php";
+                window.location.href = "aluno/dashboard_aluno.php";
                 break;
             default:
                 alert("Tipo de usuário inválido");
