@@ -52,7 +52,12 @@
 
                             <div class="col-md-6 mb-3">
                                 <label class="form-label">Departamento</label>
-                                <input id="departamento" type="text" name="departamento" class="form-control" placeholder="Informe seu departamento" required>
+                                <select name="departamento" id="departamento" class="form-control" required>
+                                    <option value="">Selecione...</option>
+                                    <option value="Politécnico">Politécnico</option>
+                                    <option value="Direito">Direito</option>
+                                    <option value="Administração">Administração</option>
+                                </select>
                             </div>
                         </div>
 
@@ -62,7 +67,7 @@
 
                                 <select id="instituicao" name="instituicao_id" class="form-control" required>
                                     <option value="">Selecione</option>
-                                    <option value="1">PUCPR</option>
+                                    <option value="">PUCPR</option>
                                     <option value="2">UTFPR</option>
                                     <option value="3">UFPR</option>
                                 </select>
