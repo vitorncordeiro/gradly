@@ -1,4 +1,4 @@
-document.getElementById("cadastrarOrientador").addEventListener("click", (e) =>{
+document.getElementById("cadastrar").addEventListener("click", (e) =>{
     e.preventDefault();
     cadastrar();
 })
@@ -8,25 +8,19 @@ async function cadastrar(){
     var email = document.getElementById('email').value;
     var senha = document.getElementById('senha').value;
     var data_cadastro = new Date().toISOString().slice(0, 19).replace('T', ' ');
-    var atuacao = document.getElementById('atuacao').value;
-    var titulacao = document.getElementById('titulacao').value;
-
-        if (!nome || !email || !senha || !atuacao || !titulacao) {
-            console.error("Algum input não foi encontrado no DOM");
-            return;
-        }
-
+    var matricula = document.getElementById('matricula').value;
+    var curso = document.getElementById('curso').value;
 
     const fd = new FormData();
     fd.append('nome', nome);
     fd.append('email', email);
     fd.append('senha', senha);
     fd.append('data_cadastro', data_cadastro);
-    fd.append('atuacao', atuacao);
-    fd.append('titulacao', titulacao);
+    fd.append('matricula', matricula);
+    fd.append('curso', curso);
     fd.append('acao', 'cadastrar');
 
-    const retorno = await fetch("/gradly/app/controllers/orientador_controller.php",{
+    const retorno = await fetch("/gradly/app/controllers/aluno_controller.php",{
         method: "POST",
         body: fd
     });
@@ -34,7 +28,7 @@ async function cadastrar(){
     const resposta = await retorno.json();
         if(resposta.success){
             alert("Sucesso! " + resposta.message);
-            window.location.href = "login.php";
+            window.location.href = "/gradly/public/views/login.php";
         }else{
             alert("Erro! " + resposta.message);
         }

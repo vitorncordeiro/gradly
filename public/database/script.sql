@@ -3,7 +3,7 @@
     USE gradly;
 
     -- =========== TABELA BASE (HERANÇA) ==============
-    CREATE TABLE `user`(
+    CREATE TABLE user(
         id INT AUTO_INCREMENT PRIMARY KEY,
         nome VARCHAR(255),
         email VARCHAR(255) UNIQUE,
@@ -145,7 +145,7 @@
     -- IDs 6-10  → Administradores
     -- IDs 11-15 → Coordenadores
     -- IDs 16-20 → Alunos
-    INSERT INTO `user` (id, nome, email, senha, dataCadastro) VALUES
+    INSERT INTO user (id, nome, email, senha, dataCadastro) VALUES
     -- Orientadores
     (1,  'Carlos Silva',    'carlos@gradly.com',    '$2y$10$N9qo8uLOickgziQueC7B5OPST9QJqq8E4fnxQSDtqKPVXzXvgHAm', NOW()),
     (2,  'Maria Souza',     'maria@gradly.com',     '$2y$10$N9qo8uLOickgziQueC7B5OPST9QJqq8E4fnxQSDtqKPVXzXvgHAm', NOW()),
