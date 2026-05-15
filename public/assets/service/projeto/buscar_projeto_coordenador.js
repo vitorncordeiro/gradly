@@ -179,6 +179,74 @@ function renderProjeto(container, projeto) {
 
 //RENDERIZA DOCUMENTOS
 
+function openPdfViewer(path, title) {
+  const modal = ensurePdfModal();
+  const iframe = modal.querySelector("iframe");
+  const heading = modal.querySelector(".pdf-modal-title");
+
+  iframe.src = resolveDocPath(path);
+  heading.textContent = title || "Visualizacao de PDF";
+  modal.classList.add("active");
+}
+
+function closePdfViewer() {
+  const modal = document.getElementById("pdfModal");
+  if (!modal) {
+    return;
+  }
+
+  const iframe = modal.querySelector("iframe");
+  iframe.src = "";
+  modal.classList.remove("active");
+}
+
+function ensurePdfModal() {
+  let modal = document.getElementById("pdfModal");
+  if (modal) {
+    return modal;
+  }
+
+  modal = document.createElement("div");
+  modal.id = "pdfModal";
+  modal.className = "pdf-modal";
+
+  modal.innerHTML = `
+    <div class="pdf-modal-card" role="dialog" aria-modal="true">
+      <div class="pdf-modal-head">
+        <span class="pdf-modal-title">Visualizacao de PDF</span>
+        <button class="icon-btn" type="button" aria-label="Fechar">
+          <svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div class="pdf-modal-body">
+        <iframe title="PDF"></iframe>
+      </div>
+    </div>
+  `;
+
+  modal.addEventListener("click", (event) => {
+    if (event.target === modal) {
+      closePdfViewer();
+    }
+  });
+
+  modal.querySelector("button").addEventListener("click", closePdfViewer);
+  document.body.appendChild(modal);
+  return modal;
+}
+
+function resolveDocPath(path) {
+  if (!path) {
+    return "";
+  }
+
+  if (path.startsWith("http") || path.startsWith("/")) {
+    return path;
+  }
+
+  return `/gradly/${path}`;
+}
+
 function renderDocumentos(documentos) {
 
   const wrapper = document.createElement("div");

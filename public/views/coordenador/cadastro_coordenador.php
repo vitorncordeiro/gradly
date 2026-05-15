@@ -67,7 +67,7 @@
 
                                 <select id="instituicao" name="instituicao_id" class="form-control" required>
                                     <option value="">Selecione</option>
-                                    <option value="">PUCPR</option>
+                                    <option value="1">PUCPR</option>
                                     <option value="2">UTFPR</option>
                                     <option value="3">UFPR</option>
                                 </select>
