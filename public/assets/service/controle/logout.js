@@ -12,5 +12,5 @@ async function logout() {
         body: new URLSearchParams({ acao: "logout" })
     });
 
-    window.location.href = "../login.php";
+    window.location.href = "/gradly/public/views/login.php";
 }

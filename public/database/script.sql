@@ -208,12 +208,12 @@
 
 
     -- ================= PROJETOS =================
-    INSERT INTO projeto_tcc (id, titulo, descricao, objetivo, temas, areas, estado, orientador_id) VALUES
-    (1, 'Sistema de IA',  'Projeto de IA',        'Criar IA',              'IA',        'Tecnologia', 'Em andamento', 1),
-    (2, 'Sistema Web',    'Projeto Web',           'Criar sistema web',     'Web',       'Tecnologia', 'Em andamento', 2),
-    (3, 'App Mobile',     'Projeto Mobile',        'Criar app',             'Mobile',    'Tecnologia', 'Planejado',    3),
-    (4, 'Banco de Dados', 'Projeto BD',            'Criar BD',              'Dados',     'Tecnologia', 'Em andamento', 4),
-    (5, 'Segurança Web',  'Projeto Segurança',     'Criar sistema seguro',  'Segurança', 'Tecnologia', 'Planejado',    5);
+    INSERT INTO projeto_tcc (id, titulo, descricao, objetivo, temas, areas, estado, orientador_id, grupo_id) VALUES
+    (1, 'Sistema de IA',  'Projeto de IA',        'Criar IA',              'IA',        'Tecnologia', 'Em andamento', 1, 1),
+    (2, 'Sistema Web',    'Projeto Web',           'Criar sistema web',     'Web',       'Tecnologia', 'Em andamento', 2, 2),
+    (3, 'App Mobile',     'Projeto Mobile',        'Criar app',             'Mobile',    'Tecnologia', 'Planejado',    3, 3),
+    (4, 'Banco de Dados', 'Projeto BD',            'Criar BD',              'Dados',     'Tecnologia', 'Em andamento', 4, 4),
+    (5, 'Segurança Web',  'Projeto Segurança',     'Criar sistema seguro',  'Segurança', 'Tecnologia', 'Planejado',    5, 5);
 
 
     -- ================= ALUNOS (IDs 16-20) =================
