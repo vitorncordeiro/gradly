@@ -41,18 +41,19 @@ class Aluno {
 
         return (int) $resultado['total'];
     }
+    
     public static function buscarAlunosCoordenador() {
         $query = "
             SELECT 
                 user.nome,
                 user.email,
-                projeto_tcc.titulo AS titulo_projeto
+                projeto_tcc.titulo AS titulo_projeto,
+                projeto_tcc.grupo_id
             FROM aluno
             JOIN user 
                 ON user.id = aluno.id
             LEFT JOIN projeto_tcc 
-                ON projeto_tcc.grupo_id = aluno.grupo_id
-        ";
+                ON projeto_tcc.grupo_id = aluno.grupo_id";
 
         $stmt = Conexao::executar($query);
 

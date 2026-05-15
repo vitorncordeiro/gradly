@@ -58,5 +58,23 @@ class Orientador {
 
         return $resultado;
     }
+
+    public static function buscarOrientadoresCoordenador() {
+        $query = "
+            SELECT 
+                user.id,
+                user.nome,
+                user.email,
+                projeto_tcc.grupo_id
+            FROM orientador
+            JOIN user 
+                ON user.id = orientador.id
+            JOIN projeto_tcc 
+                ON projeto_tcc.orientador_id = orientador.id";
+
+        $stmt = Conexao::executar($query);
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
 ?>

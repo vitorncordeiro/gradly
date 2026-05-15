@@ -118,7 +118,7 @@ class CoordenadorControle {
         }
     }
 
-        public function buscarAlunos(){
+    public function buscarAlunos(){
         $conn = Conexao::conectar();
         try {
             $alunos = Aluno::buscarAlunosCoordenador();
@@ -139,6 +139,28 @@ class CoordenadorControle {
             ]);
         }
     }
+
+    public function buscarOrientadores(){
+        $conn = Conexao::conectar();
+        try {
+            $orientadores = Orientador::buscarOrientadoresCoordenador();
+
+            echo json_encode([
+                'success' => true,
+                'orientadores' => $orientadores
+            ]);
+
+        } catch (Exception $e) {
+
+            http_response_code(500);
+
+            echo json_encode([
+                'success' => false,
+                'message' => 'Erro ao buscar dados dos orientadores',
+                'error' => $e->getMessage()
+            ]);
+        }
+    }
 }
 
 $controle = new CoordenadorControle();
@@ -154,5 +176,7 @@ if ($acao == "cadastrar") {
     $controle->buscarOrientador();
 } else if ($acao == "buscarAlunos"){
     $controle->buscarAlunos();
+} else if ($acao == "buscarOrientadores"){
+    $controle->buscarOrientadores();
 }
 ?>

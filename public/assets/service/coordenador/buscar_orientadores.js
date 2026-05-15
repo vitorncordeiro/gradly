@@ -1,10 +1,10 @@
 document.addEventListener('DOMContentLoaded', (event) => {
-    buscarAlunos();
+    buscarOrientadores();
 });
 
-async function buscarAlunos(){
+async function buscarOrientadores(){
     const fd = new FormData();
-    fd.append('acao', 'buscarAlunos');
+    fd.append('acao', 'buscarOrientadores');
 
     const retorno = await fetch("/gradly/app/controllers/coordenador_controller.php",{
         method: "POST",
@@ -15,34 +15,29 @@ async function buscarAlunos(){
 
     if(resposta.success){
         let linhas = "";
-        resposta.alunos.forEach(aluno => {
-            if(!aluno.titulo_projeto){
-                aluno.titulo_projeto = 'Não possui projeto'
-            }
+        resposta.orientadores.forEach(orientador => {
             linhas += `
                 <tr>
-                    <td>${aluno.nome}</td>
-                    <td>${aluno.email}</td>
-                    <td>${aluno.titulo_projeto}</td>
+                    <td>${orientador.nome}</td>
+                    <td>${orientador.email}</td>
                     <td>
                         <button 
                             class="btn btn-primary btn-sm"
-                            onclick="abrirProjeto(${aluno.grupo_id})"
+                            onclick="abrirProjetos(${orientador.id})"
                         >
-                            Ver Projeto
+                            Ver Projetos
                         </button>
                     </td>
                 </tr>
             `;
         });
-        document.getElementById("alunos-table-body").innerHTML = linhas;
+        document.getElementById("orientadores-table-body").innerHTML = linhas;
     }else{
         alert("Erro! " + resposta.message);
-        console.log(resposta.error)
     }
 }
 
-function abrirProjeto(grupoId){
+function abrirProjetos(orientadorId){
     window.location.href =
-        `/gradly/public/views/coordenador/projeto.php?grupo_id=${grupoId}`;
+        `/gradly/public/views/coordenador/projetos_orientador.php?orientador_id=${orientadorId}`;
 }

@@ -142,6 +142,74 @@ class ProjetoControle {
             ]);
         }
     }
+
+    public function buscarProjetoPorGrupo() {
+
+        try {
+
+            $grupo_id = $_POST['grupo_id'] ?? null;
+
+            if (!$grupo_id) {
+
+                throw new Exception("Grupo não informado");
+            }
+
+            $projeto = new Projeto();
+
+            $projeto->grupo_id = $grupo_id;
+
+            $dadosProjeto = $projeto->buscarPorGrupo();
+
+            echo json_encode([
+                'success' => true,
+                'projeto' => $dadosProjeto
+            ]);
+
+        } catch (Exception $e) {
+
+            http_response_code(500);
+
+            echo json_encode([
+                'success' => false,
+                'message' => 'Erro ao buscar projeto',
+                'error' => $e->getMessage()
+            ]);
+        }
+    }
+
+    public function buscarProjetoPorOrientador() {
+
+        try {
+
+            $orientador_id = $_POST['orientador_id'] ?? null;
+
+            if (!$orientador_id) {
+
+                throw new Exception("Orientador não informado");
+            }
+
+            $projeto = new Projeto();
+
+            $projeto->orientador_id = $orientador_id;
+
+            $projetos = $projeto->buscarPorOrientador();
+
+            echo json_encode([
+                'success' => true,
+                'projetos' => $projetos
+            ]);
+
+        } catch (Exception $e) {
+
+            http_response_code(500);
+
+            echo json_encode([
+                'success' => false,
+                'message' => 'Erro ao buscar projeto',
+                'error' => $e->getMessage()
+            ]);
+        }
+    }
 }
 
 $controle = new ProjetoControle();
@@ -152,5 +220,9 @@ if ($acao == "criar") {
     $controle->criar();
 } else if ($acao == "buscar") {
     $controle->buscar();
+} else if ($acao == "buscarProjetoPorGrupo") {
+    $controle->buscarProjetoPorGrupo();
+} else if ($acao == "buscarProjetoPorOrientador") {
+    $controle->buscarProjetoPorOrientador();
 }
 ?>

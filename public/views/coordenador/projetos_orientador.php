@@ -105,7 +105,7 @@ if ($_SESSION['usuario_tipo'] != 'coordenador') {
   </div>
 
   <ul class="snav">
-    <li><a href="gerenciar_alunos.php">Alunos</a></li>
+    <li><a href="gerenciar_alunos.php" >Alunos</a></li>
     <li><a href="gerenciar_orientadores.php" class="active">Orientadores</a></li>
     <li><a href="#">Projetos</a></li>
   </ul>
@@ -118,22 +118,23 @@ if ($_SESSION['usuario_tipo'] != 'coordenador') {
   <div class="content">
 
     <div class="content-main">
-        <h1>Gerenciar Orientadores</h1>
+        <h1>Projetos do orientador</h1>
     
         <div class="card">
             <div class="card-header">
-            Lista de Orientadores
+            Lista de Projetos do Orientador
             </div>
             <div class="card-body">
             <table class="table table-striped">
                 <thead>
                 <tr>
-                    <th>Nome</th>
-                    <th>Email</th>
+                    <th>Título</th>
+                    <th>Descrição</th>
+                    <th>Estado</th>
                     <th>Ações</th>
                 </tr>
                 </thead>
-                <tbody id="orientadores-table-body">
+                <tbody id="projetos-table-body">
 
                 </tbody>
             </table>
@@ -147,7 +148,7 @@ if ($_SESSION['usuario_tipo'] != 'coordenador') {
 </main>
 
 <script src="../../assets/service/controle/logout.js"></script>
-<script src="../../assets/service/coordenador/buscar_orientadores.js"></script>
+<script src="../../assets/service/coordenador/buscar_projetos.js"></script>
 
 </body>
 </html>

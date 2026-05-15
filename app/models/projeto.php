@@ -115,7 +115,7 @@ class Projeto {
             );
 
                  $query = "SELECT p.id,
-                         p.titulo,
+                             p.titulo,
                              p.descricao,
                              p.objetivo,
                              p.temas,

@@ -131,6 +131,7 @@ if ($_SESSION['usuario_tipo'] != 'coordenador') {
                     <th>Nome</th>
                     <th>Email</th>
                     <th>Projeto</th>
+                    <th>Ações</th>
                 </tr>
                 </thead>
                 <tbody id="alunos-table-body">
