@@ -161,6 +161,71 @@ class CoordenadorControle {
             ]);
         }
     }
+
+    public function buscarCoordenador(){
+        $conn = Conexao::conectar();
+        try {
+            $coordenador = new Coordenador();
+            $coordenador->id = $_POST['usuario_id'];
+            $coordenador = $coordenador->buscarCoordenador($_POST['usuario_id']);
+
+            echo json_encode([
+                'success' => true,
+                'coordenador' => $coordenador
+            ]);
+
+        } catch (Exception $e) {
+
+            http_response_code(500);
+
+            echo json_encode([
+                'success' => false,
+                'message' => 'Erro ao buscar dados do coordenador',
+                'error' => $e->getMessage()
+            ]);
+        }
+    }
+
+    public function editarCoordenador(){
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        $conn = Conexao::conectar();
+        try {
+            $coordenador = new Coordenador();
+            $coordenador->id = $_POST['usuario_id'];
+            $coordenador->departamento = $_POST['departamento'];
+            $coordenador->instituicao = $_POST['instituicao_id'];
+
+            $user = new User();
+            $user->id = $_POST['usuario_id'];
+            $user->nome = $_POST['nome'];
+            $user->email = $_POST['email'];
+
+            $coordenador->editarCoordenador();
+            $user->editarUser();
+
+            if (isset($_SESSION['usuario_id']) && $_SESSION['usuario_id'] == $user->id) {
+                $_SESSION['usuario_nome'] = $user->nome;
+            }
+
+            echo json_encode([
+                'success' => true,
+                'message' => 'Coordenador editado com sucesso'
+            ]);
+
+        } catch (Exception $e) {
+
+            http_response_code(500);
+
+            echo json_encode([
+                'success' => false,
+                'message' => 'Erro ao editar coordenador',
+                'error' => $e->getMessage()
+            ]);
+        }
+    }
 }
 
 $controle = new CoordenadorControle();
@@ -178,5 +243,14 @@ if ($acao == "cadastrar") {
     $controle->buscarAlunos();
 } else if ($acao == "buscarOrientadores"){
     $controle->buscarOrientadores();
+} else if ($acao == "buscarCoordenador"){
+    $controle->buscarCoordenador();
+} else if ($acao == "editarCoordenador"){
+    $controle->editarCoordenador();
+} else {
+    http_response_code(400);
+    echo json_encode([
+        'success' => false,
+        'message' => 'Ação inválida'
+    ]);
 }
-?>

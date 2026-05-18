@@ -2,13 +2,13 @@
 session_start();
 
 if (!isset($_SESSION['usuario_id'])) {
-    header("Location: login.php");
-    exit;
+  header("Location: ../login.php");
+  exit;
 }
 
 if ($_SESSION['usuario_tipo'] != 'orientador') {
-    echo "Acesso negado";
-    exit;
+  header("Location: ../login.php");
+  exit;
 }
 ?>
 
@@ -295,7 +295,7 @@ if ($_SESSION['usuario_tipo'] != 'orientador') {
     </div>
 </main>
 
-<script src="../assets/service/projeto/buscar_projeto_orientador.js"></script>
-<script src="../assets/service/controle/logout.js"></script>
+<script src="../../assets/service/projeto/buscar_projeto_orientador.js"></script>
+<script src="../../assets/service/controle/logout.js"></script>
 </body>
 </html>

@@ -2,12 +2,12 @@
 session_start();
 
 if (!isset($_SESSION['usuario_id'])) {
-    header("Location: login.php");
+    header("Location: ../login.php");
     exit;
 }
 
 if ($_SESSION['usuario_tipo'] != 'coordenador') {
-    echo "Acesso negado";
+    header("Location: ../login.php");
     exit;
 }
 ?>
@@ -50,9 +50,11 @@ if ($_SESSION['usuario_tipo'] != 'coordenador') {
       </svg>
     </button>
 
-    <span style="text-transform:capitalize">
-      <?php echo $_SESSION['usuario_nome']; ?>
-    </span>
+      <a href="perfil.php?id=<?php echo $_SESSION['usuario_id'];?>" style="text-decoration:none;color:inherit;">
+        <span style="text-transform:capitalize">
+          <?php echo $_SESSION['usuario_nome']; ?>
+        </span>
+      </a>
 
     <button class="icon-btn" id="logout">
       <svg viewBox="0 0 24 24">

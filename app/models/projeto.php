@@ -199,5 +199,25 @@ class Projeto {
             throw new Exception("Erro ao buscar projetos do orientador: " . $e->getMessage());
         }
     }
+
+    public function vincularOrientador() {
+        try {
+            $parametros = [
+                ':projeto_id' => $this->id,
+                ':orientador_id' => $this->orientador_id
+            ];
+
+            $query = "UPDATE projeto_tcc
+                      SET orientador_id = :orientador_id
+                      WHERE id = :projeto_id";
+
+            Conexao::executarComParametros($query, $parametros);
+
+            return true;
+
+        } catch (Exception $e) {
+            throw new Exception("Erro ao vincular orientador: " . $e->getMessage());
+        }
+    }
 }
 ?>

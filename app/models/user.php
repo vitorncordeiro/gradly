@@ -33,5 +33,27 @@ include_once("../config/conexao.php");
                 throw new Exception("Erro ao inserir usuário: " . $e->getMessage());
             }
         }
+
+        public function editarUser(){
+            try {
+                $parametros = Array(
+                    ':id' => $this->id,
+                    ':nome' => $this->nome,
+                    ':email' => $this->email,
+                );
+
+                $query = "UPDATE user SET 
+                        nome = :nome, 
+                        email = :email 
+                        WHERE id = :id";
+
+                Conexao::executarComParametros($query, $parametros);
+
+                return true;
+
+            } catch (Exception $e) {
+                throw new Exception("Erro ao editar usuário: " . $e->getMessage());
+            }
+        }
     }
 ?>

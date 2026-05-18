@@ -210,6 +210,36 @@ class ProjetoControle {
             ]);
         }
     }
+
+    public function vincularProjeto(){
+        try {
+            $projeto_id = $_POST['projeto_id'] ?? null;
+            $orientador_id = $_POST['orientador_id'] ?? null;
+
+            if (!$projeto_id || !$orientador_id) {
+                throw new Exception("Projeto ou Orientador não informado");
+            }
+
+            $projeto = new Projeto();
+            $projeto->id = $projeto_id;
+            $projeto->orientador_id = $orientador_id;
+
+            $projeto->vincularOrientador();
+
+            echo json_encode([
+                'success' => true,
+                'message' => 'Projeto vinculado ao orientador com sucesso'
+            ]);
+
+        } catch (Exception $e) {
+            http_response_code(500);
+            echo json_encode([
+                'success' => false,
+                'message' => 'Erro ao vincular projeto',
+                'error' => $e->getMessage()
+            ]);
+        }
+    }
 }
 
 $controle = new ProjetoControle();
@@ -224,5 +254,13 @@ if ($acao == "criar") {
     $controle->buscarProjetoPorGrupo();
 } else if ($acao == "buscarProjetoPorOrientador") {
     $controle->buscarProjetoPorOrientador();
-}
+} else if ($acao == "vincularProjeto") {
+    $controle->vincularProjeto();
+} else {
+    http_response_code(400);
+    echo json_encode([
+        'success' => false,
+        'message' => 'Ação inválida'
+    ]);
+}   
 ?>
