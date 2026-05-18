@@ -1,3 +1,5 @@
+import { notificarSucesso, notificarErro } from '../notificacao/notificacao.js';
+
 document.getElementById("cadastrar").addEventListener("click", (e) =>{
     e.preventDefault();
     cadastrar();
@@ -23,11 +25,11 @@ async function adicionar(){
 
     const resposta = await retorno.json();
         if(resposta.success){
-            alert("Sucesso! " + resposta.message);
+            notificarSucesso(resposta.message);
             participantesID.push(resposta.aluno_id);
             document.getElementById('email').value = "";            
         } else{
-            alert("Erro! " + resposta.message);
+            notificarErro(resposta.message);
         }
 }
 
@@ -49,10 +51,10 @@ async function cadastrar(){
 
     const resposta = await retorno.json();
         if(resposta.success){
-            alert("Sucesso! " + resposta.message);
+            notificarSucesso(resposta.message);
             window.location.href = "aluno/dashboard_aluno.php";
         }else{
-            alert("Erro! " + resposta.message);
+            notificarErro(resposta.message);
         }
 
 

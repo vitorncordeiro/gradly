@@ -1,3 +1,5 @@
+import { notificarSucesso, notificarErro } from '../notificacao/notificacao.js';
+
 document.getElementById("cadastrarOrientador").addEventListener("click", (e) =>{
     e.preventDefault();
     cadastrar();
@@ -33,10 +35,10 @@ async function cadastrar(){
 
     const resposta = await retorno.json();
         if(resposta.success){
-            alert("Sucesso! " + resposta.message);
+            notificarSucesso(resposta.message);
             window.location.href = "/gradly/public/views/login.php";
         }else{
-            alert("Erro! " + resposta.message);
+            notificarErro(resposta.message);
         }
 
 

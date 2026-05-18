@@ -1,3 +1,5 @@
+import { notificarErro } from '../notificacao/notificacao.js';
+
 document.addEventListener('DOMContentLoaded', (event) => {
     buscarCoordenador();
     configurarModalEditar();
@@ -40,7 +42,7 @@ async function buscarCoordenador(){
         `;
         document.getElementById("perfil-table").innerHTML = linhas;
     }else{
-        alert("Erro! " + resposta.message);
+        notificarErro(resposta.message);
         console.log(resposta.error);
     }
 }

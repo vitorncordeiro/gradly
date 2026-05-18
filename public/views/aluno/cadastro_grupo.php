@@ -116,7 +116,7 @@ if ($_SESSION['usuario_tipo'] != 'aluno') {
     </div>
 
 </div>
-<script src="../../assets/service/grupo/grupo.js"></script>
+<script type="module" src="../../assets/service/grupo/grupo.js"></script>
 <script src="../../assets/service/controle/logout.js"></script>
 </body>
 </html>

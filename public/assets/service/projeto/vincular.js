@@ -1,3 +1,5 @@
+import { notificarInfo } from '../notificacao/notificacao.js';
+
 document.getElementById("vincular").addEventListener("click", function() {
   vincularProjeto();
 });
@@ -7,7 +9,7 @@ async function vincularProjeto() {
   const orientadorId = document.getElementById("selectOrientadores").value;
 
     if (!projetoId || !orientadorId) {
-        alert("Por favor, selecione um projeto e um orientador.");
+        notificarInfo("Por favor, selecione um projeto e um orientador.");
         return;
     }
 

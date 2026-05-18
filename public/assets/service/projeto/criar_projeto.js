@@ -1,3 +1,5 @@
+import { notificarSucesso, notificarErro } from '../notificacao/notificacao.js';
+
 document.getElementById("criar_projeto").addEventListener("click", (e) => {
   e.preventDefault();
   criarProjeto();
@@ -30,9 +32,9 @@ async function criarProjeto() {
 
   const resposta = await retorno.json();
   if (resposta.success) {
-    alert("Sucesso! " + resposta.message);
+    notificarSucesso(resposta.message);
     window.location.href = "aluno/dashboard_aluno.php";
   } else {
-    alert("Erro! " + resposta.message + resposta.error);
+    notificarErro(resposta.message + resposta.error);
   }
 }

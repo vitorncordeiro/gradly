@@ -149,7 +149,7 @@ if ($_SESSION['usuario_tipo'] != 'coordenador') {
 </main>
 
 <script src="../../assets/service/controle/logout.js"></script>
-<script src="../../assets/service/coordenador/buscar_orientadores.js"></script>
+<script type="module" src="../../assets/service/coordenador/buscar_orientadores.js"></script>
 
 </body>
 </html>

@@ -1,3 +1,5 @@
+import { notificarErro } from '../notificacao/notificacao.js';
+
 document.addEventListener('DOMContentLoaded', () => {
 
     const params = new URLSearchParams(window.location.search);
@@ -85,14 +87,14 @@ async function buscarProjetos(orientadorId){
 
         } else {
 
-            alert("Erro! " + resposta.message);
+            notificarErro(resposta.message);
         }
 
     } catch(error){
 
         console.error(error);
 
-        alert("Erro ao buscar projetos.");
+        notificarErro("Erro ao buscar projetos.");
     }
 }
 

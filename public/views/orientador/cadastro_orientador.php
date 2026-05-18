@@ -87,6 +87,6 @@
         </div>
     </div>      
 </main>
-<script src="../../assets/service/orientador/cadastrar_orientador.js"></script>
+<script type="module" src="../../assets/service/orientador/cadastrar_orientador.js"></script>
 </body>
 </html>

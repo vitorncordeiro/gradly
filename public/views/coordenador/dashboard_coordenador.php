@@ -287,8 +287,8 @@ if ($_SESSION['usuario_tipo'] != 'coordenador') {
   </main>
 
   <script src="../../assets/service/controle/logout.js"></script>
-  <script src="../../assets/service/coordenador/dashboard.js"></script>
-  <script src="../../assets/service/projeto/vincular.js"></script>
+  <script type="module" src="../../assets/service/coordenador/dashboard.js"></script>
+  <script type="module" src="../../assets/service/projeto/vincular.js"></script>
 
 </body>
 

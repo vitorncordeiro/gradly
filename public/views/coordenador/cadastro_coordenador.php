@@ -93,6 +93,6 @@
         </div>
     </div>      
 </main>
-<script src="../../assets/service/coordenador/cadastrar_coordenador.js"></script>
+<script type="module" src="../../assets/service/coordenador/cadastrar_coordenador.js"></script>
 </body>
 </html>

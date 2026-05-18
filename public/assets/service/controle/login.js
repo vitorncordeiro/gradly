@@ -1,3 +1,5 @@
+import { notificarErro } from "../notificacao/notificacao.js";
+
 document.getElementById("logar").addEventListener("click", (e) =>{
     e.preventDefault();
     logar();
@@ -40,10 +42,10 @@ async function logar(){
                 window.location.href = "aluno/dashboard_aluno.php";
                 break;
             default:
-                alert("Tipo de usuário inválido");
+                notificarErro("Tipo de usuário inválido");
         }
     }else{
-        alert("Erro! " + resposta.message);
+        notificarErro(resposta.message);
     }
 }
 

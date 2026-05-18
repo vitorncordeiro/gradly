@@ -86,6 +86,6 @@
         </div>
     </div>      
 </main>
-<script src="../../assets/service/aluno/cadastrar_aluno.js"></script>
+<script type="module" src="../../assets/service/aluno/cadastrar_aluno.js"></script>
 </body>
 </html>

@@ -1,3 +1,5 @@
+import { notificarErro } from '../notificacao/notificacao.js';
+
 document.addEventListener('DOMContentLoaded', (event) => {
     buscarOrientadores();
 });
@@ -33,7 +35,7 @@ async function buscarOrientadores(){
         });
         document.getElementById("orientadores-table-body").innerHTML = linhas;
     }else{
-        alert("Erro! " + resposta.message);
+        notificarErro(resposta.message);
     }
 }
 

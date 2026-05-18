@@ -1,3 +1,5 @@
+import { notificarErro } from '../notificacao/notificacao.js';
+
 document.addEventListener('DOMContentLoaded', (event) => {
     preencher_cards();
     buscarSemOrientador();
@@ -20,7 +22,7 @@ async function preencher_cards(){
             document.getElementById("orientador").innerHTML = `<p>${resposta.orientadores}</p>`;
             document.getElementById("projeto").innerHTML = `<p>${resposta.projetos}</p>`;
         }else{
-            alert("Erro! " + resposta.message);
+            notificarErro(resposta.message);
         }
 }
 
@@ -47,7 +49,7 @@ async function buscarSemOrientador(){
         });
         document.getElementById("selectProjetos").innerHTML = opcoes;
     }else{
-        alert("Erro! " + resposta.message);
+        notificarErro(resposta.message);
     }
 }
 
@@ -74,6 +76,6 @@ async function buscarOrientador(){
         });
         document.getElementById("selectOrientadores").innerHTML = opcoes;
     }else{
-        alert("Erro! " + resposta.message);
+        notificarErro(resposta.message);
     }
 }

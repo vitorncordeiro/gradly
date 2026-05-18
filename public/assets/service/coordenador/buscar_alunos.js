@@ -1,3 +1,5 @@
+import { notificarErro } from '../notificacao/notificacao.js';
+
 document.addEventListener('DOMContentLoaded', (event) => {
     buscarAlunos();
 });
@@ -37,7 +39,7 @@ async function buscarAlunos(){
         });
         document.getElementById("alunos-table-body").innerHTML = linhas;
     }else{
-        alert("Erro! " + resposta.message);
+        notificarErro(resposta.message);
         console.log(resposta.error)
     }
 }
