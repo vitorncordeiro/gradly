@@ -43,7 +43,13 @@ class Projeto {
             }
 
             $comentariosStmt = Conexao::executarComParametros(
-                "SELECT c.id, c.texto, c.data_criacao, c.documento_id, u.nome AS autor_nome
+                "SELECT 
+                    c.id,
+                    c.texto,
+                    c.data_criacao,
+                    c.documento_id,
+                    c.autor_id,
+                    u.nome AS autor_nome
                  FROM comentario c
                  LEFT JOIN user u ON u.id = c.autor_id
                  WHERE c.documento_id IN (" . implode(',', $placeholders) . ")
@@ -66,6 +72,7 @@ class Projeto {
 
             if (!isset($documentos[$titulo])) {
                 $documentos[$titulo] = [
+                    'id' => $doc['id'],
                     'titulo' => $titulo,
                     'versoes' => []
                 ];

@@ -2,13 +2,13 @@
 session_start();
 
 if (!isset($_SESSION['usuario_id'])) {
-    header("Location: login.php");
-    exit;
+  header("Location: ../login.php");
+  exit;
 }
 
 if ($_SESSION['usuario_tipo'] != 'orientador') {
-    echo "Acesso negado";
-    exit;
+  header("Location: ../login.php");
+  exit;
 }
 ?>
 
@@ -218,45 +218,36 @@ if ($_SESSION['usuario_tipo'] != 'orientador') {
 
 <!-- SIDEBAR -->
 <aside class="sidebar">
-
-  <div class="sec-label">
-    <div class="sec-label-inner">
-      <svg class="si" viewBox="0 0 24 24">
-        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
-        <polyline points="9 22 9 12 15 12 15 22"/>
-      </svg>
-
-      Início
+    <div class="sec-label">
+        <div class="sec-label-inner">
+            <svg class="si" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            Início
+        </div>
+        <svg class="chev" viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>
     </div>
-  </div>
+    <ul class="snav"><li><a href="#" class="active">Dashboard</a></li></ul>
 
-  <ul class="snav">
-    <li>
-      <a href="dashboard_orientador.php" class="active">
-        Dashboard
-      </a>
-    </li>
-  </ul>
-
-  <div class="sec-label" style="margin-top:.5rem;">
-
-    <div class="sec-label-inner">
-
-      <svg class="si" viewBox="0 0 24 24">
-        <ellipse cx="12" cy="5" rx="9" ry="3"/>
-        <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/>
-        <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
-      </svg>
-
-      Sistema
-
+    <div class="sec-label" style="margin-top:.5rem;">
+        <div class="sec-label-inner">
+            <svg class="si" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+            Projeto
+        </div>
+        <svg class="chev" viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>
     </div>
+    <ul class="snav">
+        <li><a href="#">Tarefas</a></li>
+        <li><a href="#">Documento</a></li>
+        <li><a href="#">Grupo</a></li>
+    </ul>
 
-  </div>
-
-  <ul class="snav">
-    <li><a href="gerenciar_grupos.php">Grupos</a></li>
-  </ul>
+    <div class="sec-label" style="margin-top:.5rem;">
+        <div class="sec-label-inner">
+            <svg class="si" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            Ferramentas
+        </div>
+        <svg class="chev" viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>
+    </div>
+    <ul class="snav"><li><a href="#">Pesquisa de IA</a></li></ul>
 
 </aside>
 
@@ -266,89 +257,36 @@ if ($_SESSION['usuario_tipo'] != 'orientador') {
         <div class="content-main">
 
             <h1 class="page-title fi fi-2">Dashboard do Orientador</h1>
-            
+
             <!-- METRICS -->
             <div class="metrics-row fi fi-3">
-      
-              <!-- ALUNOS -->
-              <div class="metric-card">
-      
-                <div class="metric-head">
-      
-                  <span class="metric-lbl">
-                    Alunos
-                  </span>
-      
-                  <div class="metric-ico">
-                    <svg viewBox="0 0 24 24">
-                      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-                      <circle cx="9" cy="7" r="4"/>
-                      <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-                      <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-                    </svg>
-                  </div>
-      
+                <div class="metric-card">
+                    <div class="metric-head">
+                        <span class="metric-lbl">Status do Projeto</span>
+                        <div class="metric-ico"><svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+                    </div>
+                    <div style="margin-bottom:4px;"><span class="sbadge pending">Aguardando Aprovação</span></div>
+                    <p class="metric-sub">Pendente de revisão do orientador</p>
                 </div>
-      
-                <div class="metric-val" id="aluno"></div>
-      
-                <p class="metric-sub">
-                  Total de alunos cadastrados no sistema
-                </p>
-      
-              </div>
-      
-              <!-- ORIENTADORES -->
-              <div class="metric-card">
-      
-                <div class="metric-head">
-      
-                  <span class="metric-lbl">
-                    Orientadores
-                  </span>
-      
-                  <div class="metric-ico">
-                    <svg viewBox="0 0 24 24">
-                      <path d="M12 2l7 4v6c0 5-3.5 9-7 10-3.5-1-7-5-7-10V6l7-4z"/>
-                    </svg>
-                  </div>
-      
+
+                <div class="metric-card">
+                    <div class="metric-head">
+                        <span class="metric-lbl">Progresso</span>
+                        <div class="metric-ico"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+                    </div>
+                    <div class="metric-val empty">— %</div>
+                    <div class="prog-track"><div class="prog-fill" id="pf"></div></div>
+                    <p class="metric-sub" style="margin-top:5px;">Nenhum dado registrado</p>
                 </div>
-      
-                <div class="metric-val" id="orientador"></div>
-      
-                <p class="metric-sub">
-                  Professores ativos para orientação
-                </p>
-      
-      
-              </div>
-      
-              <!-- PROJETOS -->
-              <div class="metric-card">
-      
-                <div class="metric-head">
-      
-                  <span class="metric-lbl">
-                    Projetos
-                  </span>
-      
-                  <div class="metric-ico">
-                    <svg viewBox="0 0 24 24">
-                      <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
-                    </svg>
-                  </div>
-      
+
+                <div class="metric-card">
+                    <div class="metric-head">
+                        <span class="metric-lbl">Tarefas a Realizar</span>
+                        <div class="metric-ico"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
+                    </div>
+                    <div class="metric-val empty">—</div>
+                    <p class="metric-sub">Pendente de atribuição</p>
                 </div>
-      
-                <div class="metric-val" id="projeto"></div>
-      
-                <p class="metric-sub">
-                  Projetos acadêmicos registrados
-                </p>
-      
-              </div>
-      
             </div>
 
             <!-- PROJECT CARD (renderizado via JS) -->
@@ -357,7 +295,7 @@ if ($_SESSION['usuario_tipo'] != 'orientador') {
     </div>
 </main>
 
-<script src="../assets/service/projeto/buscar_projeto_orientador.js"></script>
-<script src="../assets/service/controle/logout.js"></script>
+<script src="../../assets/service/projeto/buscar_projeto_orientador.js"></script>
+<script src="../../assets/service/controle/logout.js"></script>
 </body>
 </html>

@@ -1,4 +1,5 @@
 <?php
+session_start();
 include_once("../models/grupo.php");
 include_once("../models/projeto.php");
 header('Content-Type: application/json; charset=utf-8');
@@ -17,25 +18,24 @@ class GrupoControle {
               JOIN user ON aluno.id = user.id
               WHERE user.email = :email";
 
-        $resultado = Conexao::executarComParametros($query, $parametros)->fetch();;
+        $resultado = Conexao::executarComParametros($query, $parametros)->fetch();
         
         if ($resultado) {
+            $alunoId = $resultado['id'];
 
-        $alunoId = $resultado['id'];
-
-        echo json_encode([
-            'success' => true,
-            'message' => 'Aluno encontrado',
-            'aluno_id' => $alunoId
-        ]);
+            echo json_encode([
+                'success' => true,
+                'message' => 'Aluno encontrado',
+                'aluno_id' => $alunoId
+            ]);
         } else {
-
-        echo json_encode([
-            'success' => false,
-            'message' => 'Email não encontrado'
-        ]);
+            echo json_encode([
+                'success' => false,
+                'message' => 'Email não encontrado'
+            ]);
+        }
     }
-    }
+    
 
     public function cadastrar() {
         $conn = Conexao::conectar();
@@ -84,14 +84,62 @@ class GrupoControle {
             ]);
         }
     }
+
+    public function buscarGrupos() {
+        $orientadorId = $_SESSION['usuario_id'];
+
+        $query = "
+            SELECT 
+                g.id,
+                g.nome,
+                g.descricao,
+                g.dataCriacao,
+
+                GROUP_CONCAT(
+                    DISTINCT u.nome SEPARATOR ', '
+                ) AS integrantes
+
+            FROM grupo g
+
+            INNER JOIN projeto_tcc p
+                ON p.grupo_id = g.id
+
+            LEFT JOIN aluno a
+                ON a.grupo_id = g.id
+
+            LEFT JOIN user u
+                ON u.id = a.id
+
+            WHERE p.orientador_id = :orientador_id
+
+            GROUP BY g.id
+        ";
+
+        $parametros = [
+            ':orientador_id' => $orientadorId
+        ];
+
+        $resultado = Conexao::executarComParametros($query, $parametros)
+            ->fetchAll(PDO::FETCH_ASSOC);
+
+        echo json_encode([
+            'success' => true,
+            'grupos' => $resultado
+        ]);
+    }
 }
+
 
 $controle = new GrupoControle();
 $acao = $_POST["acao"];
 
 if ($acao == "cadastrar") {
     $controle->cadastrar();
-}  else if ($acao == "adicionar") {
+
+} else if ($acao == "adicionar") {
     $controle->adicionar();
+
+} else if ($acao == "buscarGrupos") {
+    $controle->buscarGrupos();
 }
 ?>

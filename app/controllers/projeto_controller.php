@@ -147,7 +147,7 @@ class ProjetoControle {
 
         try {
 
-            $grupo_id = $_POST['grupo_id'] ?? null;
+            $grupo_id = $_POST['grupo_id'] ?? $_GET['grupo_id'] ?? null;
 
             if (!$grupo_id) {
 
@@ -162,7 +162,7 @@ class ProjetoControle {
 
             echo json_encode([
                 'success' => true,
-                'projeto' => $dadosProjeto
+                'data' => $dadosProjeto
             ]);
 
         } catch (Exception $e) {

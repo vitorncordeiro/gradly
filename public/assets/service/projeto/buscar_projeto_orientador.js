@@ -1,10 +1,13 @@
 document.addEventListener("DOMContentLoaded", () => {
-  buscarProjetos();
+  const params = new URLSearchParams(window.location.search);
+  const grupoId = params.get("grupo_id");
+
+  buscarProjetos(grupoId);
 });
 
 // BUSCA PROJETOS NO BACKEND
 
-async function buscarProjetos() {
+async function buscarProjetos(grupoId) {
   const container = document.getElementById("projectContainer");
 
   if (container) {
@@ -13,7 +16,7 @@ async function buscarProjetos() {
 
   try {
     const retorno = await fetch(
-      "/gradly/app/controllers/projeto_controller.php?acao=buscar",
+      `/gradly/app/controllers/projeto_controller.php?acao=buscarProjetoPorGrupo&grupo_id=${grupoId}`,
       { method: "GET" },
     );
 
@@ -26,7 +29,9 @@ async function buscarProjetos() {
       return;
     }
 
-    const projetos = Array.isArray(resposta.data) ? resposta.data : [resposta.data];
+    const projetos = Array.isArray(resposta.data)
+      ? resposta.data
+      : [resposta.data];
 
     if (container && projetos.length === 0) {
       renderEmptyState(container, resposta.message);
@@ -44,7 +49,6 @@ async function buscarProjetos() {
     }
   }
 }
-
 
 //RENDERIZA COMPONENTE DO PROJETO
 
@@ -182,31 +186,222 @@ function renderDocumentos(documentos) {
       item.appendChild(actions);
 
       const comments = versao.comentarios || [];
+
+      const usuarioId = Number(document.body.dataset.usuarioId);
+      const usuarioJaComentou = comments.some(
+        (comentario) => Number(comentario.autor_id) === usuarioId,
+      );
+
       const commentsWrap = document.createElement("div");
       commentsWrap.className = "proj-doc-comments";
+
+      // LISTA DE COMENTARIOS
+      const commentsList = document.createElement("div");
 
       if (comments.length === 0) {
         const emptyComment = document.createElement("span");
         emptyComment.className = "proj-comment-empty";
         emptyComment.textContent = "Sem comentarios";
-        commentsWrap.appendChild(emptyComment);
+        commentsList.appendChild(emptyComment);
       } else {
         comments.forEach((comentario) => {
           const commentRow = document.createElement("div");
           commentRow.className = "proj-comment";
 
+          const topRow = document.createElement("div");
+          topRow.style.display = "flex";
+          topRow.style.justifyContent = "space-between";
+          topRow.style.alignItems = "center";
+          topRow.style.gap = "10px";
+
           const commentMeta = document.createElement("span");
           commentMeta.className = "proj-comment-meta";
           commentMeta.textContent = `${comentario.autor_nome || "Anonimo"} • ${comentario.data_criacao || ""}`;
+
+          const actions = document.createElement("div");
+          actions.style.display = "flex";
+          actions.style.gap = "6px";
+
+          // BOTAO EDITAR
+
+          const editBtn = document.createElement("button");
+          editBtn.textContent = "Editar";
+          editBtn.className = "btn-ghost-sm";
+
+          editBtn.addEventListener("click", () => {
+            form.style.display = "block";
+
+            textarea.value = comentario.texto || "";
+
+            submitBtn.textContent = "Salvar edição";
+
+            form.dataset.editando = "true";
+            form.dataset.comentarioId = comentario.id;
+
+            textarea.focus();
+          });
+
+          // BOTAO EXCLUIR
+
+          const deleteBtn = document.createElement("button");
+          deleteBtn.textContent = "Excluir";
+          deleteBtn.className = "btn-ghost-sm";
+
+          deleteBtn.addEventListener("click", async () => {
+            const confirmar = confirm("Deseja excluir este comentario?");
+
+            if (!confirmar) {
+              return;
+            }
+
+            try {
+              const fd = new FormData();
+
+              fd.append("acao", "excluirComentario");
+              fd.append("comentario_id", comentario.id);
+
+              const retorno = await fetch(
+                "/gradly/app/controllers/comentario_controller.php",
+                {
+                  method: "POST",
+                  body: fd,
+                },
+              );
+
+              const resposta = await retorno.json();
+
+              if (resposta.success) {
+                location.reload();
+              } else {
+                alert(resposta.message || "Erro ao excluir");
+              }
+            } catch (error) {
+              alert("Erro ao excluir comentario");
+            }
+          });
+
+          actions.appendChild(editBtn);
+          actions.appendChild(deleteBtn);
+
+          topRow.appendChild(commentMeta);
+          topRow.appendChild(actions);
 
           const commentText = document.createElement("p");
           commentText.className = "proj-comment-text";
           commentText.textContent = comentario.texto || "";
 
-          commentRow.appendChild(commentMeta);
+          commentRow.appendChild(topRow);
           commentRow.appendChild(commentText);
-          commentsWrap.appendChild(commentRow);
+
+          commentsList.appendChild(commentRow);
         });
+      }
+
+      commentsWrap.appendChild(commentsList);
+
+      // FORMULARIO DE COMENTARIO
+
+      const form = document.createElement("form");
+      form.style.marginTop = "10px";
+
+      if (usuarioJaComentou) {
+        form.style.display = "none";
+      }
+
+      const textarea = document.createElement("textarea");
+      textarea.placeholder = "Escreva um comentario...";
+      textarea.rows = 3;
+      textarea.style.width = "100%";
+      textarea.style.resize = "vertical";
+      textarea.style.padding = "10px";
+      textarea.style.border = "1px solid #d1d5db";
+      textarea.style.borderRadius = "6px";
+      textarea.style.fontFamily = "inherit";
+      textarea.style.fontSize = "13px";
+
+      const submitBtn = document.createElement("button");
+      submitBtn.type = "submit";
+      submitBtn.className = "btn-primary";
+      submitBtn.style.marginTop = "8px";
+      submitBtn.textContent = "Comentar";
+
+      form.appendChild(textarea);
+      form.appendChild(submitBtn);
+
+      form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        const texto = textarea.value.trim();
+
+        if (!texto) {
+          return;
+        }
+
+        const editando = form.dataset.editando === "true";
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = editando ? "Salvando..." : "Enviando...";
+
+        try {
+          const fd = new FormData();
+
+          if (editando) {
+            fd.append("acao", "editarComentario");
+            fd.append("comentario_id", form.dataset.comentarioId);
+          } else {
+            fd.append("acao", "adicionarComentario");
+            fd.append("documento_id", doc.id);
+          }
+
+          fd.append("texto", texto);
+
+          const retorno = await fetch(
+            "/gradly/app/controllers/comentario_controller.php",
+            {
+              method: "POST",
+              body: fd,
+            },
+          );
+
+          const resposta = await retorno.json();
+
+          if (resposta.success) {
+            textarea.value = "";
+
+            form.style.display = "none";
+
+            location.reload();
+          } else {
+            alert(resposta.message || "Erro ao comentar");
+          }
+        } catch (error) {
+          alert("Erro ao enviar comentario");
+        }
+
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Comentar";
+
+        delete form.dataset.editando;
+        delete form.dataset.comentarioId;
+      });
+
+      if (!usuarioJaComentou) {
+        commentsWrap.appendChild(form);
+      } else {
+        const comentarioUsuario = comments.find(
+          (comentario) => Number(comentario.autor_id) === usuarioId,
+        );
+
+        if (comentarioUsuario) {
+          textarea.value = comentarioUsuario.texto || "";
+
+          form.dataset.editando = "true";
+          form.dataset.comentarioId = comentarioUsuario.id;
+
+          submitBtn.textContent = "Salvar edição";
+        }
+
+        commentsWrap.appendChild(form);
       }
 
       item.appendChild(commentsWrap);
@@ -223,7 +418,6 @@ function renderDocumentos(documentos) {
 
 //RENDERIZA ESTADO VAZIO QUANDO NAO EXISTE PROJETO CADASTRADO
 
-
 function renderEmptyState(container, message) {
   const empty = document.createElement("div");
   empty.className = "empty-state";
@@ -235,7 +429,8 @@ function renderEmptyState(container, message) {
 
   const subtitle = document.createElement("p");
   subtitle.style.marginBottom = "12px";
-  subtitle.textContent = message || "Cadastre um projeto para visualizar os detalhes.";
+  subtitle.textContent =
+    message || "Cadastre um projeto para visualizar os detalhes.";
 
   const link = document.createElement("a");
   link.className = "btn-primary";
@@ -248,9 +443,7 @@ function renderEmptyState(container, message) {
   container.appendChild(empty);
 }
 
-
 //FUNÇÕES AUXILIARES PARA VISUALIZAÇÃO DO PDF(ABRIR, FECHAR, GARANTIR MODAL)
-
 
 function openPdfViewer(path, title) {
   const modal = ensurePdfModal();
@@ -319,8 +512,6 @@ function resolveDocPath(path) {
 
   return `/gradly/${path}`;
 }
-
-
 
 function getStatusClass(status) {
   if (!status) {
