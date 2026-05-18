@@ -262,7 +262,7 @@ if ($_SESSION['usuario_tipo'] != 'coordenador') {
               <!-- BUTTON -->
               <div class="col-12 d-flex justify-content-end mt-2">
 
-                <button class="btn-primary">
+                <button class="btn-primary" id="vincular">
 
                   <svg viewBox="0 0 24 24" style="width:12px;height:12px;stroke:white;fill:none;stroke-width:2.5;">
                     <path d="M20 6L9 17l-5-5" />
@@ -288,6 +288,7 @@ if ($_SESSION['usuario_tipo'] != 'coordenador') {
 
   <script src="../../assets/service/controle/logout.js"></script>
   <script src="../../assets/service/coordenador/dashboard.js"></script>
+  <script src="../../assets/service/projeto/vincular.js"></script>
 
 </body>
 

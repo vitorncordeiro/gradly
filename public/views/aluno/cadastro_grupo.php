@@ -2,13 +2,13 @@
 session_start();
 
 if (!isset($_SESSION['usuario_id'])) {
-    header("Location: login.php");
-    exit;
+  header("Location: ../login.php");
+  exit;
 }
 
 if ($_SESSION['usuario_tipo'] != 'aluno') {
-    echo "Acesso negado";
-    exit;
+  header("Location: ../login.php");
+  exit;
 }
 ?>
 <!DOCTYPE html>
@@ -116,7 +116,7 @@ if ($_SESSION['usuario_tipo'] != 'aluno') {
     </div>
 
 </div>
-<script src="../assets/service/grupo/grupo.js"></script>
-<script src="../assets/service/controle/logout.js"></script>
+<script src="../../assets/service/grupo/grupo.js"></script>
+<script src="../../assets/service/controle/logout.js"></script>
 </body>
 </html>
